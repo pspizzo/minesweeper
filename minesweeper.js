@@ -2,6 +2,8 @@
 let size = 0;
 let totalMines = 0;
 
+let cellsFlagged = 0;
+
 // Data representation of board.
 // Each cell shows the number of neighboring mines, 0 through 8.
 // Or, if the value in a cell is -1, then the cell has a mine.
@@ -17,6 +19,11 @@ function getCellElement(row, cell) {
     return document.querySelector(`.row[data-row-id="${row}"] .cell[data-cell-id="${cell}"]`);
 }
 
+function updateMineCountDisplay() {
+    const counter = document.getElementById('mines-remaining');
+    counter.innerText = String(totalMines - cellsFlagged);
+}
+
 function rightClickHandler(e) {
     e.preventDefault();
     if (!gameRunning || e.target.getAttribute('data-state') === 'visible') {
@@ -27,12 +34,16 @@ function rightClickHandler(e) {
     const currentFlag = e.target.getAttribute('data-flagged');
     if (currentFlag === 'mine') {
         e.target.setAttribute('data-flagged', 'question');
+        cellsFlagged -= 1;
+        updateMineCountDisplay();
         e.target.innerHTML = '?';
     } else if (currentFlag === 'question') {
         e.target.removeAttribute('data-flagged');
         e.target.innerHTML = '';
     } else {
         e.target.setAttribute('data-flagged', 'mine');
+        cellsFlagged += 1;
+        updateMineCountDisplay();
         e.target.innerHTML = '!';
     }
 }
@@ -123,6 +134,7 @@ function layMines() {
             });
         }
     }
+    updateMineCountDisplay();
 }
 
 
