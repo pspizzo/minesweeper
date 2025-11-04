@@ -7,3 +7,27 @@ body >* {
   max-width: 60rem;
   margin: 0 auto;
 }
+
+#minesweeper {
+  --cell-size: calc(32rem / 16);
+}
+
+#game-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: calc(var(--cell-size) * 2);
+  font-weight: bold;
+  font-size: calc(24rem / 16);
+  background-color: #111111;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+  padding: 0 1rem;
+}
+#mines-remaining, #game-time {
+  min-width: calc(var(--cell-size) * 3);
+}
+#game-time {
+  text-align: right;
+}
+

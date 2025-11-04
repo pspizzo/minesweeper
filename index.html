@@ -12,6 +12,26 @@
 <body>
     <h1>Minesweeper</h1>
 
+    <section>
+        <label for="difficulty-select">Difficulty:</label>
+        <select id="difficulty-select">
+            <option value="easy" selected>Easy</option>
+            <option value="hard">Hard</option>
+            <option value="expert">Expert</option>
+        </select>
+    </section>
+
+    <section id="minesweeper">
+        <div id="game-container">
+            <div id="game-stats">
+                <div id="mines-remaining">0</div>
+                <div id="status-icon">-</div>
+                <div id="game-time">0</div>
+            </div>
+            <div id="game-board">
+            </div>
+        </div>
+    </section>
 
 </body>
 </html>
