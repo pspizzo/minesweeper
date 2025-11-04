@@ -61,4 +61,11 @@ body >* {
 
 svg.explosion { fill: #cc4400; }
 
+#game-board .cell[data-flagged="mine"],
+#game-board .cell[data-flagged="question"] {
+  font-size: 1.375rem;
+  font-weight: bold;
+  color: #000000;
+}
+
 

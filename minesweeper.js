@@ -17,6 +17,27 @@ function getCellElement(row, cell) {
     return document.querySelector(`.row[data-row-id="${row}"] .cell[data-cell-id="${cell}"]`);
 }
 
+function rightClickHandler(e) {
+    e.preventDefault();
+    if (!gameRunning || e.target.getAttribute('data-state') === 'visible') {
+        // Nothing to do
+        return;
+    }
+
+    const currentFlag = e.target.getAttribute('data-flagged');
+    if (currentFlag === 'mine') {
+        e.target.setAttribute('data-flagged', 'question');
+        e.target.innerHTML = '?';
+    } else if (currentFlag === 'question') {
+        e.target.removeAttribute('data-flagged');
+        e.target.innerHTML = '';
+    } else {
+        e.target.setAttribute('data-flagged', 'mine');
+        e.target.innerHTML = '!';
+    }
+}
+
+
 function cellClickHandler(e) {
     if (!gameRunning || e.target.getAttribute('data-state') === 'visible') {
         // Nothing to do
@@ -64,6 +85,7 @@ function initGameBoard() {
             cell.setAttribute('data-cell-id', j);
             cell.setAttribute('data-state', 'hidden');
             cell.addEventListener('click', cellClickHandler);
+            cell.addEventListener('contextmenu', rightClickHandler);
             row.appendChild(cell);
 
             rowData.push(0);
