@@ -86,6 +86,18 @@ function rightClickHandler(e) {
     }
 }
 
+function revealTile(tileElement, neighboringMineCount) {
+    tileElement.setAttribute('data-state', 'visible');
+    if (tileElement.getAttribute('data-flagged') === 'mine') {
+        cellsFlagged -= 1;
+        updateMineCountDisplay();
+    }
+    tileElement.removeAttribute('data-flagged');
+    cellsRevealed += 1;
+
+    tileElement.innerHTML = neighboringMineCount || '';
+    tileElement.setAttribute('data-neighboring-mines', neighboringMineCount);
+}
 
 function revealConnectedEmptySpaces(row, cell) {
     if (row < 0 || row >= size || cell < 0 || cell >= size) return;
@@ -93,13 +105,9 @@ function revealConnectedEmptySpaces(row, cell) {
     const cellEl = getCellElement(row, cell);
     if (cellEl.getAttribute('data-state') === 'visible') return;
 
-    cellEl.setAttribute('data-state', 'visible');
-    cellsRevealed += 1;
+    revealTile(cellEl, board[row][cell]);
 
-    if (board[row][cell] !== 0) {
-        cellEl.innerHTML = board[row][cell];
-        cellEl.setAttribute('data-neighboring-mines', board[row][cell]);
-    } else {
+    if (board[row][cell] === 0) {
         // Recurse
         [row - 1, row, row + 1].forEach((r) => {
             [cell - 1, cell, cell + 1].forEach((c) => {
@@ -148,10 +156,7 @@ function cellClickHandler(e) {
     } else if (board[row][cell] === 0) {
         revealConnectedEmptySpaces(row, cell);
     } else {
-        e.target.setAttribute('data-state', 'visible');
-        e.target.innerHTML = board[row][cell];
-        e.target.setAttribute('data-neighboring-mines', board[row][cell]);
-        cellsRevealed += 1;
+        revealTile(e.target, board[row][cell]);
     }
 
     if (cellsRevealed === ((size * size) - totalMines)) {
@@ -229,7 +234,6 @@ function layMines() {
     updateMineCountDisplay();
 }
 
-
 function initGame(numRowsAndCols, numMines) {
     if (size !== numRowsAndCols) {
         size = numRowsAndCols;
@@ -285,4 +289,3 @@ document.getElementById('status-icon').addEventListener('click', () => {
 document.getElementById('difficulty-select').addEventListener('change', (e) => {
     initGameForDifficulty(e.target);
 });
-
