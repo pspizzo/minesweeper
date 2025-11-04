@@ -11,6 +11,9 @@ body >* {
 #minesweeper {
   --cell-size: calc(32rem / 16);
 }
+#game-container {
+  width: calc(var(--cell-size) * 9);
+}
 
 #game-stats {
   display: flex;
@@ -30,4 +33,30 @@ body >* {
 #game-time {
   text-align: right;
 }
+
+#game-board .row {
+  display: flex;
+}
+
+#game-board .cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  width: var(--cell-size);
+  height: var(--cell-size);
+  background-color: #777;
+  border: 1px solid #444;
+}
+#game-board .cell[data-state="hidden"] {
+  border-color: #aaa #444 #444 #aaa;
+  background-color: #999;
+  cursor: pointer;
+}
+#game-board .cell[data-state="hidden"]:hover {
+  border-color: #444 #aaa #aaa #444;
+  background-color: #888;
+}
+
 
