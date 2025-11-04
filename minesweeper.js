@@ -7,6 +7,8 @@ let totalMines = 0;
 // Or, if the value in a cell is -1, then the cell has a mine.
 let board = [];
 
+const explosionSvg = '<svg class="explosion" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="m480-281 59-59h81v-81l59-59-59-59v-81h-81l-59-59-59 59h-81v81l-59 59 59 59v81h81l59 59Zm0 253L346-160H160v-186L28-480l132-134v-186h186l134-132 134 132h186v186l132 134-132 134v186H614L480-28Zm0-112 100-100h140v-140l100-100-100-100v-140H580L480-820 380-720H240v140L140-480l100 100v140h140l100 100Zm0-340Z"/></svg>';
+
 
 function cellClickHandler(e) {
     if (e.target.getAttribute('data-state') === 'visible') {
@@ -14,7 +16,19 @@ function cellClickHandler(e) {
         return;
     }
 
-    e.target.setAttribute('data-state', 'visible');
+    const row = parseInt(e.target.parentElement.getAttribute('data-row-id'), 10);
+    const cell = parseInt(e.target.getAttribute('data-cell-id'), 10);
+
+    if (board[row][cell] < 0) {
+        e.target.setAttribute('data-state', 'visible');
+        e.target.innerHTML = explosionSvg;
+    } else if (board[row][cell] === 0) {
+        e.target.setAttribute('data-state', 'visible');
+    } else {
+        e.target.setAttribute('data-state', 'visible');
+        e.target.innerHTML = board[row][cell];
+        e.target.setAttribute('data-neighboring-mines', board[row][cell]);
+    }
 }
 
 
