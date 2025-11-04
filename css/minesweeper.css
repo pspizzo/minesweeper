@@ -74,6 +74,7 @@ body >* {
 }
 
 svg.explosion { fill: #cc4400; }
+svg.bomb { fill: #000000; }
 
 #game-board .cell[data-flagged="mine"],
 #game-board .cell[data-flagged="question"] {
@@ -81,4 +82,9 @@ svg.explosion { fill: #cc4400; }
   font-weight: bold;
   color: #000000;
 }
+
+#game-board.lose .cell[data-flagged="mine"] svg.bomb { fill: #00bb00; }
+#game-board.lose .cell[data-flagged="mine"] { color: #bb0000; }
+
+#game-board.win svg.bomb { fill: #00bb00; }
 
