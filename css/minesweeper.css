@@ -34,6 +34,20 @@ body >* {
   text-align: right;
 }
 
+
+#status-icon {
+  cursor: pointer;
+}
+#status-icon img {
+  display: none;
+  height: calc(40rem / 16);
+  width: calc(40rem / 16);
+}
+#status-icon.neutral img#status-neutral { display: block; }
+#status-icon.sad img#status-sad { display: block; }
+#status-icon.happy img#status-happy { display: block; }
+
+
 #game-board .row {
   display: flex;
 }
@@ -67,5 +81,4 @@ svg.explosion { fill: #cc4400; }
   font-weight: bold;
   color: #000000;
 }
-
 
