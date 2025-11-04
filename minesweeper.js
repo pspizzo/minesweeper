@@ -86,6 +86,28 @@ function rightClickHandler(e) {
 }
 
 
+function revealConnectedEmptySpaces(row, cell) {
+    if (row < 0 || row >= size || cell < 0 || cell >= size) return;
+
+    const cellEl = getCellElement(row, cell);
+    if (cellEl.getAttribute('data-state') === 'visible') return;
+
+    cellEl.setAttribute('data-state', 'visible');
+    cellsRevealed += 1;
+
+    if (board[row][cell] !== 0) {
+        cellEl.innerHTML = board[row][cell];
+        cellEl.setAttribute('data-neighboring-mines', board[row][cell]);
+    } else {
+        // Recurse
+        [row - 1, row, row + 1].forEach((r) => {
+            [cell - 1, cell, cell + 1].forEach((c) => {
+                revealConnectedEmptySpaces(r, c);
+            })
+        });
+    }
+}
+
 function cellClickHandler(e) {
     if (!gameRunning || e.target.getAttribute('data-state') === 'visible') {
         // Nothing to do
@@ -108,8 +130,7 @@ function cellClickHandler(e) {
         updateStatusIcon();
         gameRunning = false;
     } else if (board[row][cell] === 0) {
-        e.target.setAttribute('data-state', 'visible');
-        cellsRevealed += 1;
+        revealConnectedEmptySpaces(row, cell);
     } else {
         e.target.setAttribute('data-state', 'visible');
         e.target.innerHTML = board[row][cell];
