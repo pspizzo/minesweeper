@@ -256,11 +256,33 @@ function initGame(numRowsAndCols, numMines) {
     gameRunning = true;
 }
 
+function initGameForDifficulty(selectEl) {
+    const container = document.getElementById('game-container');
+    container.classList.remove('easy');
+    container.classList.remove('hard');
+    container.classList.remove('expert');
+
+    if (selectEl.value === 'hard') {
+        initGame(16, 40);
+        container.classList.add('hard');
+    } else if (selectEl.value === 'expert') {
+        initGame(22, 99);
+        container.classList.add('expert');
+    } else {
+        initGame(9, 10);
+        container.classList.add('easy');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    initGame(9, 10);
+    initGameForDifficulty(document.getElementById('difficulty-select'));
 })
 
 document.getElementById('status-icon').addEventListener('click', () => {
-    initGame(9, 10);
+    initGameForDifficulty(document.getElementById('difficulty-select'));
+});
+
+document.getElementById('difficulty-select').addEventListener('change', (e) => {
+    initGameForDifficulty(e.target);
 });
 

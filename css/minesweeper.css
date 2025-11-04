@@ -11,6 +11,17 @@ body >* {
 #minesweeper {
   --cell-size: calc(32rem / 16);
 }
+
+#game-container.easy {
+  width: calc(var(--cell-size) * 9);
+}
+#game-container.hard {
+  width: calc(var(--cell-size) * 16);
+}
+#game-container.expert {
+  width: calc(var(--cell-size) * 22);
+}
+
 #game-container {
   width: calc(var(--cell-size) * 9);
 }
