@@ -1,6 +1,7 @@
 
 let size = 0;
 let totalMines = 0;
+let timer;
 
 let cellsFlagged = 0;
 let cellsRevealed = 0;
@@ -24,6 +25,21 @@ function getCellElement(row, cell) {
 function updateMineCountDisplay() {
     const counter = document.getElementById('mines-remaining');
     counter.innerText = String(totalMines - cellsFlagged);
+}
+
+function startGameTimer() {
+    let start = new Date().getTime();
+    const timeEl = document.getElementById('game-time');
+    timer = setInterval(() => {
+        timeEl.innerText = String(Math.floor((new Date().getTime() - start) / 1000));
+    }, 1000);
+}
+
+function stopGameTimer() {
+    if (timer) {
+        clearInterval(timer);
+        timer = undefined;
+    }
 }
 
 function updateStatusIcon() {
@@ -76,6 +92,10 @@ function cellClickHandler(e) {
         return;
     }
 
+    if (!timer) {
+        startGameTimer();
+    }
+
     const row = parseInt(e.target.parentElement.getAttribute('data-row-id'), 10);
     const cell = parseInt(e.target.getAttribute('data-cell-id'), 10);
 
@@ -84,6 +104,7 @@ function cellClickHandler(e) {
         lose = true;
         document.getElementById('game-board').classList.add('lose');
         e.target.innerHTML = explosionSvg;
+        stopGameTimer();
         updateStatusIcon();
         gameRunning = false;
     } else if (board[row][cell] === 0) {
@@ -99,6 +120,7 @@ function cellClickHandler(e) {
     if (cellsRevealed === ((size * size) - totalMines)) {
         win = true;
         document.getElementById('game-board').classList.add('win');
+        stopGameTimer();
         updateStatusIcon();
         gameRunning = false;
     }
@@ -181,6 +203,8 @@ function initGame(numRowsAndCols, numMines) {
     gameBoardEl.classList.remove('win');
     gameBoardEl.classList.remove('lose');
 
+    stopGameTimer();
+    document.getElementById('game-time').innerHTML = '0';
     cellsFlagged = 0;
     cellsRevealed = 0;
     win = false;
