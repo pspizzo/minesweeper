@@ -1,6 +1,14 @@
 
 let size = 0;
 
+function cellClickHandler(e) {
+    if (e.target.getAttribute('data-state') === 'visible') {
+        // Nothing to do
+        return;
+    }
+
+    e.target.setAttribute('data-state', 'visible');
+}
 
 
 function initGameBoard() {
@@ -21,6 +29,7 @@ function initGameBoard() {
             cell.className = 'cell';
             cell.setAttribute('data-cell-id', j);
             cell.setAttribute('data-state', 'hidden');
+            cell.addEventListener('click', cellClickHandler);
             row.appendChild(cell);
         }
         boardEl.appendChild(row);
