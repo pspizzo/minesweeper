@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Minesweeper</h1>
+
+        <div class="game-info">
+            <div class="mine-count">
+                <span class="label">Mines:</span>
+                <span id="mine-counter">10</span>
+            </div>
+
+            <div class="game-status">
+                <span id="status-indicator">Ready to Play</span>
+            </div>
+
+            <div class="timer">
+                <span class="label">Time:</span>
+                <span id="timer-display">0</span>
+            </div>
+        </div>
+
+        <div id="game-board" class="game-board">
+            <!-- Game board tiles will be generated here -->
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
